@@ -5,16 +5,16 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
-	"src/services"
+	"src/odoo"
 	"src/shemas"
 )
 
 func auth(w http.ResponseWriter, r *http.Request) {
-	defer func() {
-		if recover() != nil {
-			http.Error(w, "Что-то пошло не так", http.StatusInternalServerError)
-		}
-	}()
+	//defer func() {
+	//	if recover() != nil {
+	//		http.Error(w, "Что-то пошло не так", http.StatusInternalServerError)
+	//	}
+	//}()
 
 	var a shemas.Auth
 	err := json.NewDecoder(r.Body).Decode(&a)
@@ -23,11 +23,12 @@ func auth(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = services.Auth(a)
+	user, err := odoo.Auth(a)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	json.NewEncoder(w).Encode(user)
 	return
 }
 
