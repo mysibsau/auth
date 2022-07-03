@@ -7,4 +7,7 @@ require (
 	github.com/skilld-labs/go-odoo v1.5.0
 )
 
-require github.com/kolo/xmlrpc v0.0.0-20200310150728-e0350524596b // indirect
+require (
+	github.com/google/uuid v1.3.0 // indirect
+	github.com/kolo/xmlrpc v0.0.0-20200310150728-e0350524596b // indirect
+)

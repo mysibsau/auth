@@ -1,6 +1,7 @@
 package odoo
 
 import (
+	"github.com/google/uuid"
 	"log"
 	"src/models"
 	odoo_shemas "src/odoo/shemas"
@@ -37,5 +38,11 @@ func Auth(auth shemas.Auth) (*models.User, error) {
 	if len(*grades) == 0 {
 		log.Fatal("Оценок не найдено")
 	}
-	return &models.User{Id: "1", Group: grades.GetGroup(), Name: grades.GetName(), Login: auth.Login, Average: grades.Average()}, nil
+	return &models.User{
+		Id:      uuid.NewString(),
+		Group:   grades.GetGroup(),
+		Name:    grades.GetName(),
+		Login:   auth.Login,
+		Average: grades.Average(),
+	}, nil
 }

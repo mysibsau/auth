@@ -10,11 +10,11 @@ import (
 )
 
 func auth(w http.ResponseWriter, r *http.Request) {
-	//defer func() {
-	//	if recover() != nil {
-	//		http.Error(w, "Что-то пошло не так", http.StatusInternalServerError)
-	//	}
-	//}()
+	defer func() {
+		if recover() != nil {
+			http.Error(w, "Что-то пошло не так", http.StatusInternalServerError)
+		}
+	}()
 
 	var a shemas.Auth
 	err := json.NewDecoder(r.Body).Decode(&a)
@@ -35,5 +35,5 @@ func auth(w http.ResponseWriter, r *http.Request) {
 func main() {
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/auth", auth).Methods("POST")
-	log.Fatal(http.ListenAndServe("", router))
+	log.Fatal(http.ListenAndServe("localhost:8080", router))
 }

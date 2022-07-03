@@ -1,7 +1,7 @@
 package odoo_shemas
 
 import (
-	"log"
+	"math"
 	"strconv"
 	"strings"
 )
@@ -31,20 +31,19 @@ func (g *Grades) Average() float64 {
 		sum += mark
 		count += 1
 	}
-	log.Printf("count: %d", count)
-	return sum / float64(count)
+	return math.Round(sum/float64(count)*100) / 100
 }
 
-func (g *Grades) GetName() string {
+func (g *Grades) GetName() *string {
 	if len(*g) == 0 {
-		return ""
+		return nil
 	}
-	return (*g)[0].FIO
+	return &(*g)[0].FIO
 }
 
-func (g *Grades) GetGroup() string {
+func (g *Grades) GetGroup() *string {
 	if len(*g) == 0 {
-		return ""
+		return nil
 	}
-	return (*g)[0].Group
+	return &(*g)[0].Group
 }
